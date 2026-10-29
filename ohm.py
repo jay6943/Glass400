@@ -6,10 +6,10 @@ import tip
 
 
 def device(x, y, radius):
-  l = 220
+  l = 275
   r = cfg.radius
   cfg.radius = radius
-  for _ in range(10):
+  for _ in range(8):
     x1, y1 = dev.sline(x, y, l)
     x2, y2 = dev.bends(x1, y1, 180, 0, 1, 1)
     x3, y3 = dev.sline(x2, y2, -50)
@@ -38,10 +38,15 @@ def chip(x, y, lchip, radius):
 
 
 def chips(x, y):
-  _, y = chip(x, y + cfg.ch, cfg.lchip, 50)
+  _, y = chip(x, y + cfg.ch * 2, cfg.lchip, 20)
+  _, y = chip(x, y + cfg.ch * 2, cfg.lchip, 30)
+  _, y = chip(x, y + cfg.ch * 2, cfg.lchip, 40)
+  _, y = chip(x, y + cfg.ch * 2, cfg.lchip, 50)
   _, y = chip(x, y + cfg.ch * 2, cfg.lchip, 75)
   _, y = chip(x, y + cfg.ch * 3, cfg.lchip, 100)
   _, y = chip(x, y + cfg.ch * 4, cfg.lchip, 125)
+  _, y = chip(x, y + cfg.ch * 4, cfg.lchip, 150)
+  _, y = chip(x, y + cfg.ch * 4, cfg.lchip, 200)
   return x + cfg.lchip, y + cfg.ch * 4
 
 

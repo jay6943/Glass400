@@ -18,7 +18,8 @@ def sline(x, y, xend):
   if sign * (xend - x) > cfg.ltip:
     x1, _ = dev.sline(x, y, xend - x - sign * cfg.ltip)
   else: x1 = x
-  x2, _ = device(x1, y, sign)
+  # x2, _ = device(x1, y, sign)
+  x2, _ = dev.sline(x1, y, sign * cfg.ltip)
   return x2, y
 
 
@@ -62,4 +63,7 @@ def chips(x, y, ranges):
 
 if __name__ == '__main__':
   chips(0, 0, dxf.arange(0.2, 0.4, 0.02))
+  dev.sline(0, 1200, cfg.lchip)
+  dev.texts(cfg.ltip, 1200 - cfg.ch * 0.5, 'WG', 0.3, 'rc')
+  dev.texts(cfg.lchip - cfg.ltip, 1200 - cfg.ch * 0.5, 'WG', 0.3, 'lc')
   dev.saveas('tip')

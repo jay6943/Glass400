@@ -7,13 +7,11 @@ import numpy as np
 
 
 def device(x, y, ch):
-  ych = cfg.ch * 0.5
+  y1 = y + ch * 0.5
+  y2 = y - ch * 0.5
 
-  y1 = y + ych
-  y2 = y - ych
-
-  x1, y3 = dev.sbend(x, y1, 30, cfg.s4x4 * 3 - ych)
-  x2, y4 = dev.sbend(x, y2, 30, ych - cfg.s4x4)
+  x1, y3 = dev.sbend(x, y1, 30, cfg.s4x4 * 3 - ch * 0.5)
+  x2, y4 = dev.sbend(x, y2, 30, ch * 0.5 - cfg.s4x4)
   dev.sline(x1, y3, x2 - x1)
 
   x3, _ = dxf.taper('core', x2, y3, cfg.ltpr, cfg.wg, cfg.wtpr)
@@ -30,40 +28,22 @@ def device(x, y, ch):
   x8, _ = dev.sline(x6, y5[1], 30)
   x8, _ = dev.sline(x6, y5[2], 30)
 
-  if ch < cfg.ch:
-    x7, y1 = dev.sbend(x5, y5[0], 45, ch * 1.5 - cfg.s4x4 * 3)
-    x9, y2 = dev.sbend(x8, y5[1], 20, ch * 0.5 - cfg.s4x4)
-    x9, y3 = dev.sbend(x8, y5[2], 20, cfg.s4x4 - ch * 0.5)
-    x7, y4 = dev.sbend(x5, y5[3], 45, cfg.s4x4 * 3 - ch * 1.5)
+  x7, y1 = dev.sbend(x5, y5[0], 90, ch * 1.5 - cfg.s4x4 * 3)
+  x9, y2 = dev.sbend(x8, y5[1], 30, ch * 0.5 - cfg.s4x4)
+  x9, y3 = dev.sbend(x8, y5[2], 30, cfg.s4x4 - ch * 0.5)
+  x7, y4 = dev.sbend(x5, y5[3], 90, cfg.s4x4 * 3 - ch * 1.5)
 
-    x8, _ = dev.sline(x7, y1, 100)
-    x6, _ = dev.sline(x9, y2, x8 - x9)
-    x9, _ = dev.sline(x9, y3, x8 - x9)
-    x8, _ = dev.sline(x7, y4, 100)
+  x6, _ = dev.sline(x9, y2, 200)
+  x9, _ = dev.sline(x9, y3, 10)
+  x8, _ = dev.sline(x7, y1, x9 - x7)
+  x8, _ = dev.sline(x7, y4, x9 - x7)
 
-    x11, y2 = dev.sbend(x6, y2, 30, -ch)
-    x12, y3 = dev.sbend(x8, y3, 30, -ch)
-    x13, y4 = dev.sbend(x8, y4, 60, ch * 2)
-    x16, y2 = dev.sline(x11, y2, x13 - x11)
-    x16, y3 = dev.sline(x12, y3, x13 - x12)
-    x16, y1 = dev.sline(x7, y1, x16 - x7)
-  else:
-    x7, y1 = dev.sbend(x5, y5[0], 90, ch * 1.5 - cfg.s4x4 * 3)
-    x9, y2 = dev.sbend(x8, y5[1], 45, ch * 0.5 - cfg.s4x4)
-    x9, y3 = dev.sbend(x8, y5[2], 45, cfg.s4x4 - ch * 0.5)
-    x7, y4 = dev.sbend(x5, y5[3], 90, cfg.s4x4 * 3 - ch * 1.5)
-
-    x6, _ = dev.sline(x9, y2, 200)
-    x9, _ = dev.sline(x9, y3, 10)
-    x8, _ = dev.sline(x7, y1, x9 - x7)
-    x8, _ = dev.sline(x7, y4, x9 - x7)
-
-    x11, y2 = dev.sbend(x6, y2, 45, -ch)
-    x12, y3 = dev.sbend(x8, y3, 45, -ch)
-    x13, y4 = dev.sbend(x8, y4, 45, ch * 2)
-    x16, y2 = dev.sline(x11, y2, x13 - x11)
-    x16, y3 = dev.sline(x12, y3, x13 - x12)
-    x16, y1 = dev.sline(x7, y1, x16 - x7)
+  x11, y2 = dev.sbend(x6, y2, 45, -ch)
+  x12, y3 = dev.sbend(x8, y3, 45, -ch)
+  x13, y4 = dev.sbend(x8, y4, 45, ch * 2)
+  x16, y2 = dev.sline(x11, y2, x13 - x11)
+  x16, y3 = dev.sline(x12, y3, x13 - x12)
+  x16, y1 = dev.sline(x7, y1, x16 - x7)
 
   return x16, y
 
@@ -74,35 +54,33 @@ def chip(x, y, lchip, ych):
   x2, x3 = dxf.center(idev, x, x1, lchip)
 
   title = f'4x4-{cfg.l4x4:.0f}'
-  tip.sline(x2, y + cfg.ch * 0.5, x)
-  tip.sline(x2, y - cfg.ch * 0.5, x)
+  tip.sline(x2, y + ych * 0.5, x)
+  tip.sline(x2, y - ych * 0.5, x)
   dev.texts(x + cfg.lext, y, title, 0.3, 'rc')
 
   for i, ich in enumerate([3, 1, -1, -3]):
     title = f'{cfg.l4x4:.0f}-{4-i:.0f}'
     x4, y4 = x + lchip - cfg.lext, y + ych * 0.5 * ich
     tip.sline(x3, y4, x + lchip)
-    dev.texts(x4, y4 - ych * 0.5, title, 0.3, 'lc')
+    dev.texts(x4, y4 - ych * 0.5 + 50, title, 0.3, 'lc')
   print(f'4x4 MMI, {cfg.l4x4:.0f} um')
 
   return x + lchip, y
 
 
 def chips(x, y, ranges):
-  ch = cfg.ch
-  cfg.ch = 250
-  y += cfg.ch * 1.25
+  ch = 250
+  y += ch * 1.25
   l4x4 = cfg.l4x4
   for cfg.l4x4 in ranges:
-    _, y = chip(x, y, cfg.lchip, cfg.ch * 0.5)
-    y += cfg.ch * 2
+    _, y = chip(x, y, cfg.lchip, ch)
+    y += ch * 4
   cfg.l4x4 = l4x4
-  cfg.ch = ch
 
   return x + cfg.lchip, y - cfg.ch * 0.75
 
 
 if __name__ == '__main__':
-  chip(0, 0, cfg.lchip, cfg.ch * 0.5)
-  # chips(0, 0, dxf.arange(150, 167, 1))
+  # chip(0, 0, cfg.lchip, 250)
+  chips(0, 0, dxf.arange(152, 167, 1))
   dev.saveas('4x4')
