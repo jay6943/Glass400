@@ -20,8 +20,6 @@ def device(x, y, sign):
     x3, _ = dxf.srect('core', x2, y, cfg.l1x2, cfg.w1x2)
     x5, _ = dxf.taper('core', x3, y, cfg.ltpr, cfg.wtpr, cfg.wg)
 
-  dxf.srect('edge', x, y, x5 - x, cfg.eg)
-
   return x5, y1, y2
 
 
@@ -38,7 +36,6 @@ def chip(x, y, lchip):
     x3, y2 = dxf.sbend('core', core, x2, y2, dy)
     x9, y1, y2 = device(x3, y, -1)
     if i < 9: x9, _ = dxf.srect('core', x9, y, 100, cfg.wg)
-  dxf.srect('edge', x, y, x9 - x, cfg.eg)
   x5, x6 = dxf.center(idev, x, x9, lchip)
 
   title = f'1x2-{cfg.l1x2:.1f}'

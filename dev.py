@@ -6,59 +6,44 @@ import gds
 
 
 def srect(x, y, length, width):
-  dxf.srect('edge', x, y, length, cfg.eg)
   return dxf.srect('core', x, y, length, width)
 
 
 def sline(x, y, length):
-  dxf.srect('edge', x, y, length, cfg.eg)
   return dxf.srect('core', x, y, length, cfg.wg)
 
 
 def tline(x, y, length):
-  w, d, dy = cfg.wg * 0.5, cfg.eg * 0.5, y + length
-  dxf.crect('edge', x - d, y, x + d, dy)
+  w, dy = cfg.wg * 0.5, y + length
   dxf.crect('core', x - w, y, x + w, dy)
   return x, dy
 
 
 def tilts(x, y, length, wg, angle):
-  dxf.tilts('edge', x, y, length, cfg.eg, angle)
   return dxf.tilts('core', x, y, length, wg, angle)
 
 
 def taper(x, y, length, wstart, wstop):
-  dxf.srect('edge', x, y, length, cfg.eg)
   return dxf.taper('core', x, y, length, wstart, wstop)
 
 
 def bends(x, y, angle, rotate, xsign, ysign):
-  layers = {'core': cfg.wg, 'edge': cfg.eg}
-  x1, y1 = x, y
-  for layer, width in layers.items():
-    df = elr.curve(width, cfg.radius, angle, cfg.draft)
-    x1, y1 = dxf.bends(layer, df, x, y, rotate, xsign, ysign)
-  return x1, y1
+  df = elr.curve(cfg.wg, cfg.radius, angle, cfg.draft)
+  return dxf.bends('core', df, x, y, rotate, xsign, ysign)
 
 
 def sbend(x, y, angle, dy):
-  layers = {'core': cfg.wg, 'edge': cfg.eg}
-  x1, y1 = x, y
-  for layer, width in layers.items():
-    df = elr.curve(width, cfg.radius, angle, cfg.draft)
-    x1, y1 = dxf.sbend(layer, df, x, y, dy)
-  return x1, y1
+  df = elr.curve(cfg.wg, cfg.radius, angle, cfg.draft)
+  return dxf.sbend('core', df, x, y, dy)
 
 
 def texts(x, y, title, scale, align):
   xs = {'r': -1, 'l': 1, 'c':1}
   ys = {'t': -50, 'b': 50, 'c':0}
   xsign = xs[align[0]]
-  ysign = ys[align[1]]
   d = 10 * scale * 2  # 10 when scale = 0.5
-  dx, dy = dxf.texts('core', x + xsign * d, y, title, scale, align)
+  dx, _ = dxf.texts('core', x + xsign * d, y, title, scale, align)
   x = x - dx * 0.5 if 'c' in align[0] else x
-  dxf.srect('edge', x, y + ysign * scale, xsign * (dx + d * 2), dy + 10)
 
 
 def marks(layer, x, y, xsize, ysize):
@@ -69,12 +54,6 @@ def marks(layer, x, y, xsize, ysize):
   dy = y + ysize
   dxf.triangle(layer, x, dy, x + dl, dy, x, dy - dl)
   dxf.triangle(layer, dx, dy, dx - dl, dy, dx, dy - dl)
-
-
-def filled(x, y, sign):
-  dxf.crect('rect', x, y, x + cfg.lsize, y + cfg.lsize)
-  if sign: marks('edge', x, y, cfg.lsize, cfg.lsize)
-  return x, y
 
 
 def split(layer, xpos, ypos):

@@ -6,7 +6,6 @@ if not os.path.isdir(path): os.mkdir(path)
 draft = 'draft'
 
 wg = 1.0
-eg = 40.0
 ch = 100.0
 radius = 150.0
 angle = 6.0
@@ -30,29 +29,16 @@ wtip = 0.3
 lpad = 400.0
 wpad = 10.0
 sdcr = 2.0
-rings = [139, 140, 141]
 
 duty = 0.5
 period = 1.4
 
 lchip = 10000.0
 lsize = 10000.0
-wkey = 400.0
-wbar = 250.0
-tkey = wkey + wbar
-lkey = lsize + wkey
-lbar = lsize + wkey + wbar
-skey = lsize + wkey + wbar * 2.0
 area = [[0, 0], [-1, 0], [0, 0], [-1, -1], [0, -1]]
 
 labels = {
   'core': 1,
-  'edge': 2,
-  'keys': 3,
-  'bars': 4,
-  'cross': 5,
-  'metal': 6,
-  'hole': 7,
-  'rect': 8,
-  'text': 9
+  'metal': 2,
+  'text': 3
 }

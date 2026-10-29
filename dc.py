@@ -27,7 +27,7 @@ def chips(x, y, ranges):
     tip.sline(x2, y1, x + cfg.lchip)
     tip.sline(x1, y2, x)
     tip.sline(x2, y2, x + cfg.lchip)
-    dev.texts(x + 4750, y1 - 25, f'{cfg.sdcr:.2f}', 0.3, 'cc')
+    dev.texts(x + 4750, y1 - 25, f'{cfg.sdcr:.1f}', 0.3, 'cc')
   cfg.sdcr = sdcr
   return x2, y2
 

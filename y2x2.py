@@ -15,8 +15,6 @@ def device(x, y):
   x5, _ = dxf.taper('core', x3, y1, cfg.ltpr, cfg.wtpr, cfg.wg)
   x5, _ = dxf.taper('core', x3, y2, cfg.ltpr, cfg.wtpr, cfg.wg)
 
-  dxf.srect('edge', x, y, x5 - x, cfg.eg)
-
   return x5, y1, y2
 
 
@@ -39,7 +37,6 @@ def chip(x, y, lchip):
       x2, y4 = dxf.sbend('core', df, x1, y4, -dy)
       x1, y3 = dxf.sbend('core', df, x2, y3, -dy)
       x1, y4 = dxf.sbend('core', df, x2, y4, dy)
-      dxf.srect('edge', x1, y, (x2 - x1) * 2, cfg.eg)
   x3, y1 = dev.sbend(x1, y3, 15,  dh)
   x3, y2 = dev.sbend(x1, y4, 15, -dh)
   x5, x6 = dxf.center(idev, x, x3, lchip)

@@ -52,8 +52,7 @@ def grating(layer, x, y, sign):
 
 def chip(x, y, sign):
   grating('core', x, y, sign)
-  x1, y1 = dxf.taper('edge', x, y, 150 * sign, cfg.eg, 100)
-  return x1, y1
+  return x + 150 * sign, y
 
 
 def chips(x, y):

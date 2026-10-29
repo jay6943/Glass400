@@ -67,7 +67,6 @@ def mzi(layer, x, y, inport, outport):
     tail(layer, x6 + cfg.ltpr, y + outport * cfg.s2x2, 270, outport, -1)
 
   x7 = x6 + cfg.ltpr
-  dxf.srect('edge', x, y, x7 - x, cfg.w2x2 + cfg.eg)
 
   return x7, y1, y2
 

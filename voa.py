@@ -10,7 +10,6 @@ def arm(x, y, sign):
   x1, y = dev.srect(x, y, cfg.lpad, cfg.wg)
   # pad.bends(x, y, sign)
   pad.electrode('metal', x, y, cfg.lpad, 6, sign)
-  pad.electrode('edge', x, y, cfg.lpad, cfg.eg, sign)
 
   return x1, y
 

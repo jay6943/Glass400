@@ -26,7 +26,6 @@ def device(x, y, ch):
   x6, _ = dxf.taper('core', x4, y5[1], cfg.ltpr, cfg.wtpr, cfg.wg)
   x6, _ = dxf.taper('core', x4, y5[2], cfg.ltpr, cfg.wtpr, cfg.wg)
   x5, _ = dxf.taper('core', x4, y5[3], cfg.ltpr, cfg.wtpr, cfg.wg)
-  dxf.srect('edge', x2, y, x5 - x2, cfg.eg + cfg.w4x4)
 
   x8, _ = dev.sline(x6, y5[1], 30)
   x8, _ = dev.sline(x6, y5[2], 30)

@@ -9,7 +9,6 @@ def device(x, y, sign):
 
   x1, _ = dxf.taper('core', x, y, sign * l[0], w[0], w[1])
   x2, _ = dxf.srect('core', x1, y, sign * l[1], w[1])
-  dxf.srect('edge', x, y, x2 - x, cfg.eg)
   
   return x2, y
 
