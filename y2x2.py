@@ -19,19 +19,18 @@ def device(x, y):
 
 
 def chip(x, y, lchip):
-  ch, angle = cfg.ch * 0.25, 20
-
-  dh = ch * 2 - cfg.s2x2
-
-  y1 = y + ch * 2
-  y2 = y - ch * 2
+  angle = 20
+  ch = cfg.ch * 0.5
+  dy = ch - cfg.s2x2
+  y1 = y + ch
+  y2 = y - ch
   
   idev = len(dat.points)
-  x1, y3 = dev.sbend(x, y1, angle, -dh)
-  x1, y4 = dev.sbend(x, y2, angle,  dh)
+  x1, y3 = dev.sbend(x, y1, angle, -dy)
+  x1, y4 = dev.sbend(x, y2, angle,  dy)
   x1, y3, y4 = device(x1, y)
-  x3, y1 = dev.sbend(x1, y3, angle,  dh)
-  x3, y2 = dev.sbend(x1, y4, angle, -dh)
+  x3, y1 = dev.sbend(x1, y3, angle,  dy)
+  x3, y2 = dev.sbend(x1, y4, angle, -dy)
   x5, x6 = dxf.center(idev, x, x3, lchip)
 
   title = f'2x2-{cfg.l2x2:.1f}'
@@ -45,8 +44,8 @@ def chip(x, y, lchip):
 
 
 def chips(x, y):
-  y += cfg.ch * 1.5
   var = cfg.l2x2
+  y += cfg.ch * 1.5
   for cfg.l2x2 in [51.5, 52.5, 53.5, 54.5]:
     _, y = chip(x, y, cfg.lchip)
     y += cfg.ch * 2
