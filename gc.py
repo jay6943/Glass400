@@ -42,31 +42,34 @@ def device(fp):
 def collimator():
   x1 = 0
   y1 = cfg.wg * 0.5
-  dx = 0.1
-  dy = 0.001
+  dx = 0.05
+  dy = 0.0001
 
   upper = [[x1,  y1]]
   lower = [[x1, -y1]]
-  for _ in range(1):
+  for i in range(2000):
     x2 = x1 + dx
     y2 = y1 + dy
 
-    for _ in range(100):
+    f = -1
+    while f < 0:
       t = (y2 - y1) / dx
       f = (2 * x1 + dx) * (2 * t / (1 - t * t)) - dx * t - 2 * y1
-      print(f)
+      y2 += dy
+      print(f'{f:0.6f}, ({x2:0.3f}, {y2:0.3f})')
+    print(f'f = {f:0.6f}, ({x2:0.3f}, {y2:0.3f})')
 
     x1 = x2
-    y1 = y2
+    y1 = y2 - dy * 0.5
     upper += [[x1,  y1]]
     lower += [[x1, -y1]]
   # df = np.array(upper + lower[::-1])
 
   # rects = []
-  # l = cfg.period * (1 - cfg.duty)
+  # dx = cfg.period * (1 - cfg.duty)
   # for _ in range(30):
-  #   x1 = x + l
-  #   y1 = y + np.tan(0.5 * a) * l
+  #   x1 = x + dx
+  #   y1 = y + np.tan(0.5 * a) * dx
   #   x = x + cfg.period
   #   y = y + np.tan(0.5 * a) * cfg.period
   #   a = np.arctan(y / x)
@@ -121,7 +124,7 @@ def chips(x, y):
 
 
 if __name__ == '__main__':
-  # chips(0, 0)
-  # dev.saveas('grating')
-  # dev.savedxf('grating')
-  collimator()
+  chips(0, 0)
+  dev.saveas('grating')
+  dev.savedxf('grating')
+  # collimator()
