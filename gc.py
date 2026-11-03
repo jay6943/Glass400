@@ -15,7 +15,7 @@ def device(fp):
 
   upper = [[x,  y]]
   lower = [[x, -y]]
-  for i in range(int(round(100 / l, 3))):
+  for _ in range(int(round(100 / l, 3))):
     x = x + l
     y = y + np.tan(0.5 * a) * l
     a = np.arctan(y / x)
@@ -37,6 +37,45 @@ def device(fp):
     rects.append(xy)
 
   np.save(fp, {'guide': df, 'grating': rects})
+
+
+def collimator():
+  x1 = 0
+  y1 = cfg.wg * 0.5
+  dx = 0.1
+  dy = 0.001
+
+  upper = [[x1,  y1]]
+  lower = [[x1, -y1]]
+  for _ in range(1):
+    x2 = x1 + dx
+    y2 = y1 + dy
+
+    for _ in range(100):
+      t = (y2 - y1) / dx
+      f = (2 * x1 + dx) * (2 * t / (1 - t * t)) - dx * t - 2 * y1
+      print(f)
+
+    x1 = x2
+    y1 = y2
+    upper += [[x1,  y1]]
+    lower += [[x1, -y1]]
+  # df = np.array(upper + lower[::-1])
+
+  # rects = []
+  # l = cfg.period * (1 - cfg.duty)
+  # for _ in range(30):
+  #   x1 = x + l
+  #   y1 = y + np.tan(0.5 * a) * l
+  #   x = x + cfg.period
+  #   y = y + np.tan(0.5 * a) * cfg.period
+  #   a = np.arctan(y / x)
+  #   x2 = x
+  #   y2 = y
+  #   xy = np.array([[x1, y1], [x1, -y1], [x2, -y2], [x2, y2]])
+  #   rects.append(xy)
+
+  # np.save(fp, {'guide': df, 'grating': rects})
 
 
 def grating(layer, x, y, sign):
@@ -82,6 +121,7 @@ def chips(x, y):
 
 
 if __name__ == '__main__':
-  chips(0, 0)
-  dev.saveas('grating')
+  # chips(0, 0)
+  # dev.saveas('grating')
   # dev.savedxf('grating')
+  collimator()

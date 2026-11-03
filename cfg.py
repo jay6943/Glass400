@@ -5,10 +5,9 @@ path = f'../../mask/Glass400-{ver}'
 if not os.path.isdir(path): os.mkdir(path)
 draft = 'draft'
 
-wg = 1.0
+wg = 0.8
 ch = 100.0
 radius = 150.0
-angle = 6.0
 
 w1x2 = 5.6
 l1x2 = 18.0
@@ -31,7 +30,7 @@ wpad = 10.0
 sdcr = 2.0
 
 duty = 0.5
-period = 1.4
+period = 1.0
 
 lchip = 10000.0
 lsize = 10000.0
