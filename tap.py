@@ -26,15 +26,15 @@ def chip(x, y, lchip):
   return x, y
 
 
-def chips(x, y, ranges):
+def chips(x, y):
   sdcr = cfg.sdcr
   y -= cfg.ch * 2
-  for cfg.sdcr in ranges:
+  for cfg.sdcr in dxf.arange(1.3, 2.3, 0.1):
     _, y = chip(x, y + cfg.ch * 2, cfg.lchip)
   cfg.sdcr = sdcr
   return x, y + cfg.ch
 
 
 if __name__ == '__main__':
-  chips(0, 0, dxf.arange(1.5, 2.5, 0.1))
+  chips(0, 0)
   dev.saveas('tap')

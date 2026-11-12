@@ -47,7 +47,7 @@ def chips(x, y):
   _, y = chip(x, y + cfg.ch * 4, cfg.lchip, 125)
   _, y = chip(x, y + cfg.ch * 4, cfg.lchip, 150)
   _, y = chip(x, y + cfg.ch * 4, cfg.lchip, 200)
-  return x + cfg.lchip, y + cfg.ch * 4
+  return x + cfg.lchip, y + cfg.ch * 6
 
 
 if __name__ == '__main__':

@@ -95,10 +95,10 @@ def chip(x, y, angle, ch):
   return x + cfg.lchip, y
 
 
-def chips(x, y, ranges):
+def chips(x, y):
   y += cfg.ch * 1.5
   lpbs = cfg.lpbs
-  for cfg.lpbs in ranges:
+  for cfg.lpbs in dxf.arange(30, 80, 2):
     _, y = chip(x, y, 20, cfg.ch * 0.5)
     y += cfg.ch * 2
   cfg.lpbs = lpbs
@@ -108,6 +108,6 @@ def chips(x, y, ranges):
 
 if __name__ == '__main__':
   filename = 'pbs'
-  chips(0, 0, dxf.arange(44, 66, 1))
+  chips(0, 0)
   dev.filled(0, 0, 1)
   dev.saveas(filename)

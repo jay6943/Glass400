@@ -48,10 +48,10 @@ def chip(x, y, lchip):
   return x + lchip, y
 
 
-def chips(x, y, ranges):
+def chips(x, y):
   y += cfg.ch
   wtip = cfg.wtip
-  for cfg.wtip in ranges:
+  for cfg.wtip in dxf.arange(0.3, 0.4, 0.02):
     chip(x, y, cfg.lchip)
     title = f'TIP-{cfg.wtip:.2f}'
     dev.texts(x + cfg.ltip, y - cfg.ch * 0.5, title, 0.3, 'rc')
@@ -62,7 +62,7 @@ def chips(x, y, ranges):
 
 
 if __name__ == '__main__':
-  chips(0, 0, dxf.arange(0.2, 0.4, 0.02))
+  chips(0, 0)
   dev.sline(0, 1200, cfg.lchip)
   dev.texts(cfg.ltip, 1200 - cfg.ch * 0.5, 'WG', 0.3, 'rc')
   dev.texts(cfg.lchip - cfg.ltip, 1200 - cfg.ch * 0.5, 'WG', 0.3, 'lc')
